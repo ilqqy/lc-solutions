@@ -125,6 +125,11 @@ install.sh     installs or removes the commands and app-menu entry
 docs/          screenshots
 ```
 
+## License
+
+The code in this repository is released under the [MIT License](LICENSE). The solutions
+it fetches are not part of it; see Credits below.
+
 ## Credits
 
 All solutions and explanations come from
