@@ -192,21 +192,34 @@ def label(text="", *classes, **props):
     return widget
 
 
-def segmented(labels, on_change):
-    """An Apple-style segmented control; on_change(index) fires when the choice changes."""
-    box = Gtk.Box(halign=Gtk.Align.START)
-    box.add_css_class("lc-segmented")
+def toggle_group(labels, add, on_change, ellipsize):
+    """Radio-style toggle buttons; on_change(index) fires when the choice changes."""
+    mode = Pango.EllipsizeMode.END if ellipsize else Pango.EllipsizeMode.NONE
     buttons = []
-    for i, text in enumerate(labels):
-        button = Gtk.ToggleButton(child=label(text, ellipsize=Pango.EllipsizeMode.END, xalign=0.5))
+    for text in labels:
+        button = Gtk.ToggleButton(child=label(text, ellipsize=mode, xalign=0.5))
         if buttons:
             button.set_group(buttons[0])
-        box.append(button)
+        add(button)
         buttons.append(button)
     buttons[0].set_active(True)
     for i, button in enumerate(buttons):  # connect after the initial choice so it doesn't fire
         button.connect("toggled", lambda b, i=i: b.get_active() and on_change(i))
-    return box, buttons
+    return buttons
+
+
+def segmented(labels, on_change):
+    """An Apple-style segmented control."""
+    box = Gtk.Box(halign=Gtk.Align.START)
+    box.add_css_class("lc-segmented")
+    return box, toggle_group(labels, box.append, on_change, ellipsize=True)
+
+
+def chips(labels, on_change):
+    """Choice buttons that wrap onto more lines instead of hiding any option."""
+    wrap = Adw.WrapBox(child_spacing=4, line_spacing=4, valign=Gtk.Align.START)
+    wrap.add_css_class("lc-chips")
+    return wrap, toggle_group(labels, wrap.append, on_change, ellipsize=False)
 
 
 def prose_view(*classes):
@@ -243,7 +256,7 @@ class Window(Adw.ApplicationWindow):
         self.current = None       # problem number shown on the right
         self.approaches = []
         self.approach = 0
-        self.lang_exts = []       # extensions offered by the language dropdown, in order
+        self.lang_exts = []       # extensions offered by the language buttons, in order
         self.code = ""
         self.difficulty = None    # sidebar filter
         self.request_id = 0
@@ -452,11 +465,9 @@ class Window(Adw.ApplicationWindow):
         code_card.add_css_class("lc-code-card")
         code_header = Gtk.Box(spacing=8)
         code_header.add_css_class("lc-code-header")
-        self.lang = Gtk.DropDown(model=Gtk.StringList())
-        self.lang.add_css_class("lc-lang")
-        self.lang.connect("notify::selected", self.on_language)
-        code_header.append(self.lang)
-        code_header.append(Gtk.Box(hexpand=True))
+        # One button per language this approach has, filled in by show_approach.
+        self.lang_bin = Adw.Bin(hexpand=True, valign=Gtk.Align.START)
+        code_header.append(self.lang_bin)
         self.copy_content = Adw.ButtonContent(icon_name="edit-copy-symbolic", label="Copy")
         self.copy_button = Gtk.Button(child=self.copy_content, tooltip_text="Copy (Ctrl+Shift+C)")
         self.copy_button.add_css_class("lc-copy")
@@ -666,11 +677,12 @@ class Window(Adw.ApplicationWindow):
         self.lang_exts = [ext for _, ext in LANGUAGES if ext in approach["code"]]
         preferred = self.preferred_ext()
         ext = preferred if preferred in self.lang_exts else ("py" if "py" in self.lang_exts else self.lang_exts[0])
-        self.syncing = True
         names = dict((e, n) for n, e in LANGUAGES)
-        self.lang.set_model(Gtk.StringList.new([names[e] for e in self.lang_exts]))
-        self.lang.set_selected(self.lang_exts.index(ext))
+        self.syncing = True
+        wrap, buttons = chips([names[e] for e in self.lang_exts], self.on_language)
+        buttons[self.lang_exts.index(ext)].set_active(True)
         self.syncing = False
+        self.lang_bin.set_child(wrap)
         self.show_code(ext)
 
     def show_code(self, ext):
@@ -686,10 +698,10 @@ class Window(Adw.ApplicationWindow):
 
     # ---------- actions ----------
 
-    def on_language(self, *_):
-        if self.syncing or not self.lang_exts:
+    def on_language(self, index):
+        if self.syncing or index >= len(self.lang_exts):
             return
-        ext = self.lang_exts[self.lang.get_selected()]
+        ext = self.lang_exts[index]
         self.settings["lang"] = ext
         save_settings(self.settings)
         self.show_code(ext)

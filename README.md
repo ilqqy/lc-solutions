@@ -32,6 +32,8 @@ The GUI adds:
 
 - The problem's difficulty, topic tags, time and space complexity, and a written
   intuition and explanation for each approach.
+- One button per language the problem has a solution in. Click one and that solution
+  is shown and copied. Your choice is remembered.
 - Syntax highlighting, light and dark mode (it follows your system), and an Apple-style
   layout that collapses its sidebar in narrow windows.
 - Opening a problem **copies the solution automatically**. The Copy button turns into
@@ -40,7 +42,7 @@ The GUI adds:
 ## Install
 
 Requires Python 3 (developed on 3.14) and a clipboard tool. The GUI also needs GTK 4 and
-libadwaita 1.6 or newer.
+libadwaita 1.7 or newer.
 
 ```sh
 git clone https://github.com/ilqqy/lc-solutions.git
@@ -96,7 +98,7 @@ Run `lc-gui`, or open **LeetCode Solutions** from your app menu.
 | `Esc` | Clear the search |
 
 The segmented filter under the search box narrows the list to Easy, Medium or Hard.
-Your chosen language is remembered between runs.
+The language buttons above the code only list languages the problem actually has.
 
 ## How it works
 

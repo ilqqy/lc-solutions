@@ -316,18 +316,25 @@ textview.lc-prose.lc-prose-quiet, textview.lc-prose.lc-prose-quiet text { color:
   border-bottom: 1px solid @lc_sep;
 }
 
-dropdown.lc-lang > button {
-  background: transparent;
+/* language choice buttons: solid blue marks the chosen one, like a selected sidebar row */
+.lc-chips > button {
+  background: @lc_fill;
+  background-image: none;
   border: none;
   box-shadow: none;
+  outline: none;
   border-radius: 8px;
-  padding: 4px 8px;
-  font-weight: 600;
-  min-height: 26px;
+  min-height: 28px;
+  padding: 0 8px;
   transition: background-color 150ms ease;
 }
 
-dropdown.lc-lang > button:hover { background: @lc_fill; }
+.lc-chips > button label { color: @lc_fg2; font-size: 12px; font-weight: 500; transition: color 150ms ease; }
+.lc-chips > button:hover { background: @lc_fill_strong; }
+.lc-chips > button:hover label { color: @lc_fg; }
+.lc-chips > button:checked { background: @lc_accent; }
+.lc-chips > button:checked label { color: #ffffff; font-weight: 600; }
+.lc-chips > button:focus-visible { box-shadow: 0 0 0 2px alpha(@lc_accent, 0.5); }
 
 button.lc-copy {
   background: transparent;
@@ -335,7 +342,7 @@ button.lc-copy {
   box-shadow: none;
   border-radius: 8px;
   padding: 4px 8px;
-  min-height: 26px;
+  min-height: 28px;
   color: @lc_accent;
   font-weight: 600;
   transition: background-color 150ms ease, color 200ms ease;
