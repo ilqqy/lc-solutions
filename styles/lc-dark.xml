@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Xcode-inspired colours for the LeetCode Solutions app -->
+<style-scheme id="lc-dark" name="LC Dark" version="1.0">
+  <style name="text" foreground="#dfdfe0" background="#18181a"/>
+  <style name="selection" background="#3f638b"/>
+  <style name="selection-unfocused" background="#3f638b"/>
+  <style name="current-line" background="#18181a"/>
+  <style name="line-numbers" foreground="#5c5c62" background="#18181a"/>
+  <style name="current-line-number" foreground="#5c5c62" background="#18181a"/>
+  <style name="bracket-match" bold="true"/>
+
+  <style name="def:comment" foreground="#7f8c98" italic="true"/>
+  <style name="def:shebang" foreground="#7f8c98"/>
+  <style name="def:doc-comment-element" foreground="#7f8c98" bold="true"/>
+  <style name="def:keyword" foreground="#ff7ab2" bold="true"/>
+  <style name="def:statement" foreground="#ff7ab2" bold="true"/>
+  <style name="def:type" foreground="#dabaff"/>
+  <style name="def:builtin" foreground="#b281eb"/>
+  <style name="def:function" foreground="#67b7a4"/>
+  <style name="def:identifier" foreground="#dfdfe0"/>
+  <style name="def:preprocessor" foreground="#ffa14f"/>
+  <style name="def:string" foreground="#ff8170"/>
+  <style name="def:character" foreground="#ff8170"/>
+  <style name="def:special-char" foreground="#ff8170"/>
+  <style name="def:number" foreground="#d9c97c"/>
+  <style name="def:floating-point" foreground="#d9c97c"/>
+  <style name="def:decimal" foreground="#d9c97c"/>
+  <style name="def:base-n-integer" foreground="#d9c97c"/>
+  <style name="def:constant" foreground="#d9c97c"/>
+  <style name="def:boolean" foreground="#ff7ab2" bold="true"/>
+  <style name="def:special-constant" foreground="#ff7ab2" bold="true"/>
+  <style name="def:operator" foreground="#dfdfe0"/>
+</style-scheme>

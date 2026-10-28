@@ -1,0 +1,401 @@
+/* LeetCode Solutions — an Apple-inspired look.
+ * Loaded above the user theme, so these colours apply inside this app only. */
+
+/* ---------- palette: light ---------- */
+/* Both palettes live in @media blocks: a top-level @define-color would win over the dark one. */
+@media (prefers-color-scheme: light) {
+  @define-color lc_bg #ffffff;
+  @define-color lc_sidebar #f5f5f7;
+  @define-color lc_fg #1d1d1f;
+  @define-color lc_fg2 rgba(60, 60, 67, 0.62);
+  @define-color lc_fg3 rgba(60, 60, 67, 0.32);
+  @define-color lc_sep rgba(0, 0, 0, 0.08);
+  @define-color lc_fill rgba(118, 118, 128, 0.12);
+  @define-color lc_fill_strong rgba(118, 118, 128, 0.2);
+  @define-color lc_card #ffffff;
+  @define-color lc_code #fbfbfd;
+  @define-color lc_raised #ffffff;
+  @define-color lc_popover #ffffff;
+  @define-color lc_accent #007aff;
+  @define-color lc_green #248a3d;
+  @define-color lc_orange #c93400;
+  @define-color lc_red #d70015;
+  @define-color lc_dot_green #34c759;
+  @define-color lc_dot_orange #ff9f0a;
+  @define-color lc_dot_red #ff3b30;
+  @define-color lc_shadow rgba(0, 0, 0, 0.06);
+}
+
+/* ---------- palette: dark ---------- */
+@media (prefers-color-scheme: dark) {
+  @define-color lc_bg #0a0a0b;
+  @define-color lc_sidebar #121214;
+  @define-color lc_fg #f5f5f7;
+  @define-color lc_fg2 rgba(235, 235, 245, 0.6);
+  @define-color lc_fg3 rgba(235, 235, 245, 0.3);
+  @define-color lc_sep rgba(255, 255, 255, 0.07);
+  @define-color lc_fill rgba(118, 118, 128, 0.2);
+  @define-color lc_fill_strong rgba(118, 118, 128, 0.3);
+  @define-color lc_card #141416;
+  @define-color lc_code #0f0f11;
+  @define-color lc_raised #48484c;
+  @define-color lc_popover #1c1c1e;
+  @define-color lc_accent #0a84ff;
+  @define-color lc_green #30d158;
+  @define-color lc_orange #ff9f0a;
+  @define-color lc_red #ff453a;
+  @define-color lc_dot_green #30d158;
+  @define-color lc_dot_orange #ff9f0a;
+  @define-color lc_dot_red #ff453a;
+  @define-color lc_shadow rgba(0, 0, 0, 0.5);
+}
+
+/* ---------- map onto Adwaita's colours ---------- */
+@define-color accent_bg_color @lc_accent;
+@define-color accent_color @lc_accent;
+@define-color accent_fg_color #ffffff;
+@define-color window_bg_color @lc_bg;
+@define-color window_fg_color @lc_fg;
+@define-color view_bg_color @lc_bg;
+@define-color view_fg_color @lc_fg;
+@define-color headerbar_bg_color @lc_bg;
+@define-color headerbar_backdrop_color @lc_bg;
+@define-color headerbar_fg_color @lc_fg;
+@define-color headerbar_border_color @lc_sep;
+@define-color headerbar_shade_color transparent;
+@define-color sidebar_bg_color @lc_sidebar;
+@define-color sidebar_backdrop_color @lc_sidebar;
+@define-color sidebar_fg_color @lc_fg;
+@define-color sidebar_border_color @lc_sep;
+@define-color sidebar_shade_color transparent;
+@define-color card_bg_color @lc_card;
+@define-color card_fg_color @lc_fg;
+@define-color popover_bg_color @lc_popover;
+@define-color popover_fg_color @lc_fg;
+@define-color dialog_bg_color @lc_popover;
+@define-color dialog_fg_color @lc_fg;
+
+/* ---------- type ---------- */
+window.lc {
+  /* unslop-ignore: brief is Apple's design language. SF Pro can't be licensed on Linux;
+     Adwaita Sans (an Inter derivative) is the closest installed match to its metrics. */
+  font-family: "SF Pro Text", "Adwaita Sans", sans-serif;
+  font-size: 13px;
+  color: @lc_fg;
+  background: @lc_bg;
+}
+
+window.lc headerbar {
+  background: transparent;
+  box-shadow: none;
+  min-height: 46px;
+}
+
+window.lc headerbar button {
+  border-radius: 8px;
+  background: transparent;
+  color: @lc_fg2;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+
+window.lc headerbar button:hover { background: @lc_fill; color: @lc_fg; }
+window.lc headerbar button:checked { background: @lc_fill; color: @lc_fg; }
+
+.lc-sidebar { background: @lc_sidebar; }
+
+.lc-sidebar-title {
+  font-family: "SF Pro Display", "Adwaita Sans", sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+.lc-count { color: @lc_fg2; font-size: 12px; font-feature-settings: "tnum"; }
+
+/* ---------- search field ---------- */
+entry.lc-search {
+  background: @lc_fill;
+  border: none;
+  border-radius: 10px;
+  min-height: 32px;
+  padding: 0 8px;
+  box-shadow: 0 0 0 0 transparent;
+  outline: none;
+  transition: box-shadow 200ms ease, background-color 200ms ease;
+}
+
+entry.lc-search:focus-within {
+  background: @lc_bg;
+  box-shadow: 0 0 0 3.5px alpha(@lc_accent, 0.35), 0 0 0 1px alpha(@lc_accent, 0.8); /* unslop-ignore: macOS focus ring, marks keyboard focus */
+}
+
+entry.lc-search image { color: @lc_fg2; }
+
+/* ---------- segmented control ---------- */
+.lc-segmented {
+  background: @lc_fill;
+  border-radius: 10px;
+  padding: 2px;
+}
+
+.lc-segmented > button {
+  background: transparent;
+  background-image: none;
+  border: none;
+  box-shadow: none;
+  outline: none;
+  border-radius: 8px;
+  min-height: 24px;
+  padding: 0 8px;
+  font-weight: 500;
+  font-size: 12px;
+  color: @lc_fg2;
+  transition: background-color 220ms cubic-bezier(0.25, 0.1, 0.25, 1), color 220ms ease, box-shadow 220ms ease;
+}
+
+.lc-segmented > button label { color: @lc_fg2; font-weight: 500; }
+.lc-segmented > button:hover label { color: @lc_fg; }
+.lc-segmented > button:checked label { color: @lc_fg; font-weight: 600; }
+
+.lc-segmented > button:checked {
+  background: @lc_raised;
+  color: @lc_fg;
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 0 0 0.5px rgba(0, 0, 0, 0.06);
+}
+
+.lc-segmented > button:focus-visible { box-shadow: 0 0 0 2px alpha(@lc_accent, 0.5); }
+
+/* ---------- problem list ---------- */
+listview.lc-list { background: transparent; padding: 4px 0 12px 0; }
+
+listview.lc-list > row {
+  border-radius: 10px;
+  margin: 2px 8px;
+  padding: 8px 8px;
+  background: transparent;
+  outline: none;
+  transition: background-color 150ms ease;
+}
+
+listview.lc-list > row:hover { background: @lc_fill; }
+listview.lc-list > row:focus-visible { box-shadow: inset 0 0 0 2px alpha(@lc_accent, 0.5); }
+listview.lc-list > row:selected { background: @lc_accent; }
+listview.lc-list > row:selected label { color: #ffffff; }
+listview.lc-list > row:selected .lc-num { color: rgba(255, 255, 255, 0.72); }
+listview.lc-list > row:selected .lc-dot { box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.9); }
+
+.lc-num {
+  color: @lc_fg3;
+  font-size: 12px;
+  font-weight: 500;
+  font-feature-settings: "tnum";
+}
+
+.lc-row-title { font-weight: 500; }
+
+.lc-dot {
+  min-width: 7px;
+  min-height: 7px;
+  border-radius: 999px;
+}
+
+.lc-dot.easy { background: @lc_dot_green; }
+.lc-dot.medium { background: @lc_dot_orange; }
+.lc-dot.hard { background: @lc_dot_red; }
+
+/* ---------- problem page ---------- */
+.lc-eyebrow {
+  color: @lc_fg2;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+}
+
+.lc-large-title {
+  font-family: "SF Pro Display", "Adwaita Sans", sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.6px;
+}
+
+.lc-badge {
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.lc-badge.easy { background: alpha(@lc_dot_green, 0.16); color: @lc_green; }
+.lc-badge.medium { background: alpha(@lc_dot_orange, 0.16); color: @lc_orange; }
+.lc-badge.hard { background: alpha(@lc_dot_red, 0.14); color: @lc_red; }
+
+flowbox.lc-tags > flowboxchild { padding: 0; background: transparent; }
+
+.lc-tag {
+  background: @lc_fill;
+  color: @lc_fg2;
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.lc-section-title {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.1px;
+}
+
+/* ---------- cards ---------- */
+.lc-card {
+  background: @lc_card;
+  border-radius: 14px;
+  border: 1px solid @lc_sep;
+  box-shadow: 0 1px 2px @lc_shadow, 0 4px 16px alpha(@lc_shadow, 0.5);
+}
+
+.lc-approach-name {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+}
+
+.lc-stat {
+  background: @lc_fill;
+  border-radius: 8px;
+  padding: 4px 8px;
+}
+
+.lc-stat-key {
+  color: @lc_fg2;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+}
+
+.lc-stat-value {
+  font-family: "SF Mono", "JetBrainsMono Nerd Font", "Adwaita Mono", monospace;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+button.lc-disclosure {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 4px 8px;
+  margin-left: -8px; /* optical: text lines up with the card's 16px content edge */
+  border-radius: 6px;
+  color: @lc_accent;
+  font-weight: 500;
+  transition: background-color 150ms ease;
+}
+
+button.lc-disclosure:hover { background: alpha(@lc_accent, 0.08); }
+
+button.lc-disclosure image { transition: -gtk-icon-transform 250ms cubic-bezier(0.25, 0.1, 0.25, 1); }
+button.lc-disclosure.open image { -gtk-icon-transform: rotate(90deg); }
+
+.lc-subheading {
+  color: @lc_fg2;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+}
+
+textview.lc-prose, textview.lc-prose text { background: transparent; color: @lc_fg; font-size: 14px; }
+textview.lc-prose.lc-prose-quiet, textview.lc-prose.lc-prose-quiet text { color: @lc_fg2; }
+
+/* ---------- code card ---------- */
+.lc-code-card { background: @lc_code; }
+
+.lc-code-header {
+  padding: 8px;
+  border-bottom: 1px solid @lc_sep;
+}
+
+dropdown.lc-lang > button {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  border-radius: 8px;
+  padding: 4px 8px;
+  font-weight: 600;
+  min-height: 26px;
+  transition: background-color 150ms ease;
+}
+
+dropdown.lc-lang > button:hover { background: @lc_fill; }
+
+button.lc-copy {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  border-radius: 8px;
+  padding: 4px 8px;
+  min-height: 26px;
+  color: @lc_accent;
+  font-weight: 600;
+  transition: background-color 150ms ease, color 200ms ease;
+}
+
+button.lc-copy:hover { background: alpha(@lc_accent, 0.1); }
+button.lc-copy.copied { color: @lc_green; }
+button.lc-copy.copied:hover { background: alpha(@lc_dot_green, 0.12); }
+
+textview.lc-code, textview.lc-code text {
+  background: @lc_code;
+  font-family: "SF Mono", "JetBrainsMono Nerd Font", "JetBrains Mono", "Adwaita Mono", monospace;
+  font-size: 13px;
+}
+
+textview.lc-code border.left, textview.lc-code gutter {
+  background: @lc_code;
+}
+
+/* ---------- empty / error states ---------- */
+.lc-placeholder-title {
+  font-family: "SF Pro Display", "Adwaita Sans", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: @lc_fg3;
+}
+
+.lc-placeholder-text { color: @lc_fg2; font-size: 13px; }
+
+.lc-kbd {
+  background: @lc_fill;
+  border-radius: 6px;
+  border-bottom: 1px solid @lc_fill_strong;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: @lc_fg2;
+}
+
+.lc-hint { color: @lc_fg3; font-size: 12px; }
+
+/* ---------- popovers & toasts ---------- */
+window.lc popover > contents {
+  border-radius: 14px;
+  padding: 4px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18), 0 0 0 0.5px rgba(0, 0, 0, 0.1);
+}
+
+window.lc popover listview > row {
+  border-radius: 10px;
+  padding: 4px 8px;
+}
+
+window.lc popover listview > row:selected { background: @lc_accent; color: #ffffff; }
+
+window.lc toast {
+  border-radius: 14px;
+  background: rgba(30, 30, 32, 0.92);
+  color: #ffffff;
+  font-weight: 500;
+}
+
+window.lc scrollbar slider { border-radius: 999px; min-width: 6px; min-height: 6px; }
